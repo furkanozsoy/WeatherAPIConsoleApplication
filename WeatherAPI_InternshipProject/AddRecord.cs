@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WeatherAPI_InternshipProject
+{
+    class AddRecord
+    {
+        public static void AddRecordText(string data)
+        {
+            try
+            {
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"ForecastResults.txt", true))
+                {   
+                    file.WriteLine(data);  
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Oooops", ex);
+            }
+        }
+    }
+}
