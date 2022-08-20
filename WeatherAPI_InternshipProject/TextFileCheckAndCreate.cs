@@ -11,14 +11,7 @@ namespace WeatherAPI_InternshipProject
     {
         public static void CheckAndCreate()
         {
-            if (File.Exists(@"ForecastResults.txt"))
-            {
-                return;
-            }
-            else
-            {
-                Console.WriteLine("No File");
-                using (StreamWriter sw = File.CreateText(@"ForecastResults.txt")) ;
+                using (StreamWriter sw = File.CreateText(@"ForecastResults.txt")); // Text Dosyası Oluşturuldu
                 String headers = String.Format("{0,-25} {1,-20} {2,-12} {3, -12} {4, -12} {5, -12} {6, -12} \n",
                                                "Country",
                                                "Name",
@@ -26,13 +19,13 @@ namespace WeatherAPI_InternshipProject
                                                "Min_Temp_C",
                                                "Sunrise",
                                                "Sunset",
-                                               "Date");
+                                               "Date");                            // Dosyanın içinde olacak Headerler Formatlandı
 
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"ForecastResults.txt", true))
                 {
-                    file.WriteLine(headers);
+                    file.WriteLine(headers);            // Headerler text dosyasına istenen formatta yazıldı.
                 }
-            }
+            
         }
     }
 }

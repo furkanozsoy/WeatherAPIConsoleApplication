@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="AddRecord.cs" />
     <Compile Include="ApiHelper.cs" />
+    <Compile Include="FileDelete.cs" />
     <Compile Include="FinalResults.cs" />
     <Compile Include="InputParcala.cs" />
     <Compile Include="Program.cs" />

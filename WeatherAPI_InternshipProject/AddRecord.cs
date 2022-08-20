@@ -16,11 +16,13 @@ namespace WeatherAPI_InternshipProject
                 {   
                     file.WriteLine(data);  
                 }
+                // Metin Dosyasına yazma işlemi.
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Oooops", ex);
+                throw new ApplicationException("Oooops File Write Error", ex);
             }
+                // Hata kontrolü için Try Catch kullanıldı.
         }
     }
 }

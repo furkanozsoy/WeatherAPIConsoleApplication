@@ -9,11 +9,18 @@ namespace WeatherAPI_InternshipProject
     class InputParcala
     {
         public Array Words {get; set;}
-        public static Array inputParcalama(string input)
+        public static Array InputParcalama(string input)
         {
-            string phrase = input;
-            string[] Words = phrase.Split(' ');
-            return Words;
+            try
+            {
+                string phrase = input;
+                string[] Words = phrase.Split(' ');
+                return Words;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Oooops Error inputParcalama", ex);
+            }
         }
     }
 }
