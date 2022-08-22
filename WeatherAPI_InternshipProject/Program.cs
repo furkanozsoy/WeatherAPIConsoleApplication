@@ -9,16 +9,18 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 
+// Ömer Furkan Özsoy Weather API Console Project
+
 namespace WeatherAPI_InternshipProject
 {
     class Program
     {
         static public void Main(String[] args)
         {
-            
+
             TextFileCheckAndCreate.CheckAndCreate(); //Yeni  text dosyası oluşturuldu ve istenen format verildi
 
-            if (args.Length != 0 && args != null)  
+            if (args.Length != 0 && args != null)  //Command Line'da çalıştırılan uygulamaya parametre girildi mi kontrolü.
             {
                 foreach (string i in args) // Foreach kullanılarak kullanıcının istediği tüm şehirler için olmak üzere bir döngü oluşturuldu                                    
                 {
@@ -41,7 +43,7 @@ namespace WeatherAPI_InternshipProject
                 // Eğer kullanıcı istenildiği üzere cmd üzerinden şehirler girmezse input olarak soruluyor.
                 // else yapısında geri kalan işlemler input üzerinden olmak üzere if tarafı ile aynı.
                 string sehir = Console.ReadLine();
-                Array array1 = InputParcala.InputParcalama(sehir);
+                Array array1 = InputParcala.InputParcalama(sehir); // İnputu kelime kelime parçalayıp array haline getiren metod. 
                 foreach (string i in array1)
                 {
                     for (int j = 0; j < 3; j++)
@@ -54,7 +56,8 @@ namespace WeatherAPI_InternshipProject
                         AddRecord.AddRecordText(data);
                     }
                 }
-                _ = System.Diagnostics.Process.Start(@"ForecastResults.txt");  //Command Line komutu çalıştırıldıktan ve program gerekli kodları 
+                _ = System.Diagnostics.Process.Start(@"ForecastResults.txt");  //Command Line komutu çalıştırıldıktan ve program gerekli kodları
+                                                                               ////Çalıştırıp sonlanırken kullanıcı için txt dosyasını açan kısım
             }
         }
     }

@@ -13,8 +13,8 @@ namespace WeatherAPI_InternshipProject
             try
             {
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"ForecastResults.txt", true))
-                {   
-                    file.WriteLine(data);  
+                {
+                    file.WriteLine(data);
                 }
                 // Metin Dosyasına yazma işlemi.
             }
@@ -22,7 +22,7 @@ namespace WeatherAPI_InternshipProject
             {
                 throw new ApplicationException("Oooops File Write Error", ex);
             }
-                // Hata kontrolü için Try Catch kullanıldı.
+            // Hata kontrolü için Try Catch kullanıldı.
         }
     }
 }

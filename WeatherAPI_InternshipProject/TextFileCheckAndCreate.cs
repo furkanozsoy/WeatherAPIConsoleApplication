@@ -11,7 +11,9 @@ namespace WeatherAPI_InternshipProject
     {
         public static void CheckAndCreate()
         {
-                using (StreamWriter sw = File.CreateText(@"ForecastResults.txt")); // Text Dosyası Oluşturuldu
+            try
+            {
+                using (StreamWriter sw = File.CreateText(@"ForecastResults.txt")) ; // Text Dosyası Oluşturuldu
                 String headers = String.Format("{0,-25} {1,-20} {2,-12} {3, -12} {4, -12} {5, -12} {6, -12} \n",
                                                "Country",
                                                "Name",
@@ -25,7 +27,13 @@ namespace WeatherAPI_InternshipProject
                 {
                     file.WriteLine(headers);            // Headerler text dosyasına istenen formatta yazıldı.
                 }
-            
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Oooops Error file Creation", ex);
+            }
+
+
         }
     }
 }
