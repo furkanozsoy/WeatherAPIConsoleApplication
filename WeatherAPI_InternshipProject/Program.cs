@@ -18,24 +18,24 @@ namespace WeatherAPI_InternshipProject
         static public void Main(String[] args)
         {
 
-            TextFileCheckAndCreate.CheckAndCreate(); //Yeni  text dosyası oluşturuldu ve istenen format verildi
+            TextFileCheckAndCreate.CheckAndCreate(); //Yeni  text dosyası oluşturuldu ve istenen format verildi.
 
             if (args.Length != 0 && args != null)  //Command Line'da çalıştırılan uygulamaya parametre girildi mi kontrolü.
             {
-                foreach (string i in args) // Foreach kullanılarak kullanıcının istediği tüm şehirler için olmak üzere bir döngü oluşturuldu                                    
+                foreach (string i in args) // Foreach kullanılarak kullanıcının istediği tüm şehirler için olmak üzere bir döngü oluşturuldu.                                    
                 {
-                    for (int j = 0; j < 3; j++)  // 3 günlük hava durumu için döngü her bir gün için olmak üzere 3 defa dönüyor
+                    for (int j = 0; j < 3; j++)  // 3 günlük hava durumu için döngü her bir gün için olmak üzere 3 defa dönüyor.
                     {
-                        var ApiResponse = ApiHelper.ApiConnection(j, i); // API Bağlantısı sağlandı ve şehir bilgileri fonskiyonun içine yollandı
-                                                                         // Şehirler için gerekli tarihlerdeki forecast bilgileri çekildi
+                        var ApiResponse = ApiHelper.ApiConnection(j, i); // API Bağlantısı sağlandı ve şehir bilgileri fonskiyonun içine yollandı.
+                                                                         // Şehirler için gerekli tarihlerdeki forecast bilgileri çekildi.
                         String apiresult = ApiResponse.Content.ToString(); // API'dan alınan bilgiler sonraki aşamada daha rahat kullanılmak üzere
-                                                                           // String formatına döndürüldü
-                        String data = FinalResults.PrepareResults(apiresult, j); // String formatındaki bilgiler uygun String formatı düzenine getirildi
+                                                                           // String formatına döndürüldü.
+                        String data = FinalResults.PrepareResults(apiresult, j); // String formatındaki bilgiler uygun String formatı düzenine getirildi.
                         AddRecord.AddRecordText(data);  //Dosya yazımına hazır hale gelen bilgi txt dosyasına yazıldı.
                     }
                 }
                 _ = System.Diagnostics.Process.Start(@"ForecastResults.txt");  //Command Line komutu çalıştırıldıktan ve program gerekli kodları 
-                                                                               //Çalıştırıp sonlanırken kullanıcı için txt dosyasını açan kısım
+                                                                               //Çalıştırıp sonlanırken kullanıcı için txt dosyasını açan kısım.
             }
             else
             {
@@ -57,7 +57,7 @@ namespace WeatherAPI_InternshipProject
                     }
                 }
                 _ = System.Diagnostics.Process.Start(@"ForecastResults.txt");  //Command Line komutu çalıştırıldıktan ve program gerekli kodları
-                                                                               ////Çalıştırıp sonlanırken kullanıcı için txt dosyasını açan kısım
+                                                                               ////Çalıştırıp sonlanırken kullanıcı için txt dosyasını açan kısım.
             }
         }
     }
