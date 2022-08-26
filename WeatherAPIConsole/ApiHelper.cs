@@ -14,7 +14,7 @@ namespace WeatherAPI_InternshipProject
             {
                 DateTime dateAndTime = DateTime.Now.AddDays(-j);
                 String Today = dateAndTime.ToString("yyyy-MM-dd");
-                String Api = ("8f09b934186e4321afc112128220908");
+                String Api = ("309513621ff6401090493155222408");
                 String url = "http://api.weatherapi.com/v1/history.json?key=" + Api + "&q=" + i + "&dt=" + Today;
                 var client = new RestClient(url);
                 var request = new RestRequest();

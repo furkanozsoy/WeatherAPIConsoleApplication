@@ -8,7 +8,7 @@ namespace WeatherAPI_InternshipProject
 {
     class AddRecord
     {
-        public static void AddRecordText(string data)
+        public static void AddRecordText(string data)  // Trxt yazımında kullanılmış olan class (şuan kullanılmıyor)
         {
             try
             {

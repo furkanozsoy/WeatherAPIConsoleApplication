@@ -20,7 +20,7 @@ namespace WeatherAPI_InternshipProject
         public string Date { get; set; }
 
 
-        public static string PrepareResults(string apiresult, int j)
+        public static FinalResults PrepareResults(string apiresult, int j)
         {
             try
             {
@@ -36,7 +36,11 @@ namespace WeatherAPI_InternshipProject
                 temp.Date = day.ToString("yyyy-MM-dd");
                 String data = String.Format("{0,-25} {1,-20} {2,-12} {3, -12} {4, -12} {5, -12} {6, -12} \n",
                                              temp.Country, temp.Name, temp.Maxtemp_c, temp.Mintemp_c, temp.Sunrise, temp.Sunset, temp.Date);
-                return data;
+                String returnValue = temp.Country +" "+ temp.Name + " " + temp.Maxtemp_c + " " + temp.Mintemp_c + " " + temp.Sunrise + " " + temp.Sunset + " " + temp.Date;
+                //return data;
+                return temp;
+                
+
             }
             catch (Exception ex)
             {
