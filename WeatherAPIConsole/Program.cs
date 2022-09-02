@@ -32,10 +32,11 @@ namespace WeatherAPI_InternshipProject
             wsSheet1.Column(5).Width = 16;
             wsSheet1.Column(6).Width = 16;
             wsSheet1.Column(7).Width = 16;
-            wsSheet1.Cells["A0:G0"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
-            wsSheet1.Cells["A0:G0"].Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
-            wsSheet1.Cells["A0:G0"].Style.Border.Left.Style = ExcelBorderStyle.Thick;
-            wsSheet1.Cells["A0:G0"].Style.Border.Right.Style = ExcelBorderStyle.Thick;      // Excel Dosyası görüntü özellikleri
+            wsSheet1.Column(8).Width = 16;
+            wsSheet1.Cells["A0:H0"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
+            wsSheet1.Cells["A0:H0"].Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
+            wsSheet1.Cells["A0:H0"].Style.Border.Left.Style = ExcelBorderStyle.Thick;
+            wsSheet1.Cells["A0:H0"].Style.Border.Right.Style = ExcelBorderStyle.Thick;      // Excel Dosyası görüntü özellikleri
 
 
             using (ExcelRange Rng = wsSheet1.Cells[1, 1])                                   // Excel Tablo Headerları
@@ -80,13 +81,20 @@ namespace WeatherAPI_InternshipProject
                 Rng.Style.Font.Bold = true;
                 Rng.Style.Font.Italic = true;
             }
+            using (ExcelRange Rng = wsSheet1.Cells[1, 8])
+            {
+                Rng.Value = "3 Day Avg. Temp";
+                Rng.Style.Font.Bold = true;
+                Rng.Style.Font.Italic = true;
+            }
 
             // Excel dosyası oluşturuldu.  Ayrı bir class'da olmama sebebi classda dosyayı kaydedip daha sonra yeni veri yazmaya çalıştığımda eski veriler kayboluyor.
 
 
 
             //TextFileCheckAndCreate.CheckAndCreate(); //Yeni  text dosyası oluşturuldu ve istenen format verildi. !!! Kullanılmıyor
-            int counter = 2;                            // Counter döngü içerisinde Exceldeki gerekli hücreye ulaşmak için kullanılıyor
+            int counter = 2;                           // Counter döngü içerisinde Exceldeki gerekli hücreye ulaşmak için kullanılıyor
+            int ortalamaC = 0;
             if (args.Length != 0 && args != null)  //Command Line'da çalıştırılan uygulamaya parametre girildi mi kontrolü.
             {
                 foreach (string i in args) // Foreach kullanılarak kullanıcının istediği tüm şehirler için olmak üzere bir döngü oluşturuldu.                                    
@@ -128,8 +136,17 @@ namespace WeatherAPI_InternshipProject
                         {
                             Rng.Value = NewResult.Date;
                         }
+                        ortalamaC = ortalamaC + 1; // ortalama sıcaklık
+                        if (ortalamaC == 3)
+                        {
+                            using (ExcelRange Rng = wsSheet1.Cells[counter-1, 8])
+                            {
+                                Rng.Value = NewResult.Avgtemp + "C°";
+                            }
+                            ortalamaC = 0;
+                        }
                         counter++;  // Sayaç Arttırıldı.
-
+                        
                     }
                 }
 
@@ -181,7 +198,17 @@ namespace WeatherAPI_InternshipProject
                         {
                             Rng.Value = NewResult.Date;
                         }
+                        ortalamaC = ortalamaC + 1; // ortalama sıcaklık
+                        if (ortalamaC == 3)
+                        {
+                            using (ExcelRange Rng = wsSheet1.Cells[counter-2,8,counter,8])
+                            {
+                                Rng.Value = NewResult.Avgtemp + "C°";
+                            }
+                            ortalamaC = 0;
+                        }
                         counter++;  // Sayaç Arttırıldı.
+                        
                     }
 
                 }
@@ -192,7 +219,7 @@ namespace WeatherAPI_InternshipProject
             wsSheet1.Protection.IsProtected = false;
             wsSheet1.Protection.AllowSelectLockedCells = false;
             ExcelPkg.SaveAs(new FileInfo(@"results.xlsx"));
-            _ = System.Diagnostics.Process.Start(@"results.xlsx");
+            _ = System.Diagnostics.Process.Start(@"results.xlsx"); 
         }
     }
 }

@@ -18,6 +18,7 @@ namespace WeatherAPI_InternshipProject
         public string Sunset { get; set; }
 
         public string Date { get; set; }
+        public string Avgtemp { get; set; }
 
 
         public static FinalResults PrepareResults(string apiresult, int j)
@@ -32,6 +33,7 @@ namespace WeatherAPI_InternshipProject
                 temp.Mintemp_c = json["forecast"]["forecastday"][0]["day"]["mintemp_c"].ToString();
                 temp.Sunrise = json["forecast"]["forecastday"][0]["astro"]["sunrise"].ToString();
                 temp.Sunset = json["forecast"]["forecastday"][0]["astro"]["sunset"].ToString();
+                temp.Avgtemp = json["forecast"]["forecastday"][0]["day"]["avgtemp_c"].ToString();
                 DateTime day = DateTime.Now.AddDays(-j);
                 temp.Date = day.ToString("yyyy-MM-dd");
                 String data = String.Format("{0,-25} {1,-20} {2,-12} {3, -12} {4, -12} {5, -12} {6, -12} \n",
