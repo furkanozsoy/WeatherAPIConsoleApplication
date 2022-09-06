@@ -11,6 +11,8 @@ using System.IO;
 using OfficeOpenXml;
 using WeatherAPIConsole;
 using OfficeOpenXml.Style;
+using System.Drawing;
+using OfficeOpenXml.Drawing;
 
 
 // Ömer Furkan Özsoy Weather API Console Project
@@ -21,6 +23,9 @@ namespace WeatherAPI_InternshipProject
     {
         static public void Main(String[] args)
         {
+            
+
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;  // EEPlus için lisans işlemi
 
             ExcelPackage ExcelPkg = new ExcelPackage();                                 // Excel Dosya işlemi
@@ -33,10 +38,36 @@ namespace WeatherAPI_InternshipProject
             wsSheet1.Column(6).Width = 16;
             wsSheet1.Column(7).Width = 16;
             wsSheet1.Column(8).Width = 16;
-            wsSheet1.Cells["A0:H0"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
-            wsSheet1.Cells["A0:H0"].Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
-            wsSheet1.Cells["A0:H0"].Style.Border.Left.Style = ExcelBorderStyle.Thick;
-            wsSheet1.Cells["A0:H0"].Style.Border.Right.Style = ExcelBorderStyle.Thick;      // Excel Dosyası görüntü özellikleri
+            wsSheet1.Column(9).Width = 5.75;
+            wsSheet1.Rows[0,999999].Height = 30;
+
+            wsSheet1.Cells["A0:I0"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
+            wsSheet1.Cells["A0:I0"].Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
+            wsSheet1.Cells["A0:I0"].Style.Border.Left.Style = ExcelBorderStyle.Thick;
+            wsSheet1.Cells["A0:I0"].Style.Border.Right.Style = ExcelBorderStyle.Thick;      // Excel Dosyası görüntü özellikleri
+
+
+
+
+            //System.IO.FileInfo image = new System.IO.FileInfo("FullMoon.jpg");
+            //ExcelPicture excelImage = null;
+            //if (image != null)
+            //{
+
+            //    //note, image name must be unique if you are using multiple images in same excel
+            //    excelImage = wsSheet1.Drawings.AddPicture("image", image);
+
+            //    // In .SetPosition, we are using 8th Column and 8th Row, with 0 Offset 
+            //    excelImage.SetPosition(9, 0, 8, 0);
+
+
+            //    //set size of image, 100= width, 100= height
+            //    excelImage.SetSize(40, 40);
+
+            //}
+
+
+
 
 
             using (ExcelRange Rng = wsSheet1.Cells[1, 1])                                   // Excel Tablo Headerları
@@ -87,6 +118,21 @@ namespace WeatherAPI_InternshipProject
                 Rng.Style.Font.Bold = true;
                 Rng.Style.Font.Italic = true;
             }
+            using (ExcelRange Rng = wsSheet1.Cells[1, 9])
+            {
+                Rng.Value = "Moon";
+                Rng.Style.Font.Bold = true;
+                Rng.Style.Font.Italic = true;
+            }
+
+            System.IO.FileInfo image_fullmoon = new System.IO.FileInfo("FullMoon.jpg");
+            System.IO.FileInfo image_waxgib = new System.IO.FileInfo("WaxingGibbous.jpg");
+            System.IO.FileInfo image_firstq = new System.IO.FileInfo("FirstQuarter.jpg");
+            System.IO.FileInfo image_waxcres = new System.IO.FileInfo("WaxingCrescent.jpg");
+            System.IO.FileInfo image_newmoon = new System.IO.FileInfo("NewMoon.jpg");
+            System.IO.FileInfo image_wancres = new System.IO.FileInfo("WaningCrescent.jpg");
+            System.IO.FileInfo image_lastq = new System.IO.FileInfo("LastQuarter.jpg");
+            System.IO.FileInfo image_wangib = new System.IO.FileInfo("WaningGibbous.jpg");
 
             // Excel dosyası oluşturuldu.  Ayrı bir class'da olmama sebebi classda dosyayı kaydedip daha sonra yeni veri yazmaya çalıştığımda eski veriler kayboluyor.
 
@@ -139,11 +185,32 @@ namespace WeatherAPI_InternshipProject
                         ortalamaC = ortalamaC + 1; // ortalama sıcaklık
                         if (ortalamaC == 3)
                         {
-                            using (ExcelRange Rng = wsSheet1.Cells[counter-1, 8])
+                            using (ExcelRange Rng = wsSheet1.Cells[counter - 2, 8, counter, 8])
                             {
                                 Rng.Value = NewResult.Avgtemp + "C°";
                             }
                             ortalamaC = 0;
+                        }
+                        ExcelPicture excelImage = null;
+                        System.IO.FileInfo image = null;
+
+                        if (NewResult.MoonPhase == "First Quarter")
+                        {
+
+                            image = image_firstq;
+
+
+                            //note, image name must be unique if you are using multiple images in same excel
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+
+                            // In .SetPosition, we are using 8th Column and 8th Row, with 0 Offset 
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+
+
+                            //set size of image, 100= width, 100= height
+                            excelImage.SetSize(40, 40);
+
+
                         }
                         counter++;  // Sayaç Arttırıldı.
                         
@@ -165,7 +232,7 @@ namespace WeatherAPI_InternshipProject
                     for (int j = 0; j < 3; j++)
                     {
                         var ApiResponse = ApiHelper.ApiConnection(j, i);
-                        
+
                         String apiresult = ApiResponse.Content.ToString();
                         FinalResults NewResult = FinalResults.PrepareResults(apiresult, j);
                         //AddRecord.AddRecordText(data);
@@ -201,21 +268,49 @@ namespace WeatherAPI_InternshipProject
                         ortalamaC = ortalamaC + 1; // ortalama sıcaklık
                         if (ortalamaC == 3)
                         {
-                            using (ExcelRange Rng = wsSheet1.Cells[counter-2,8,counter,8])
+                            using (ExcelRange Rng = wsSheet1.Cells[counter - 2, 8, counter, 8])
                             {
                                 Rng.Value = NewResult.Avgtemp + "C°";
                             }
                             ortalamaC = 0;
                         }
+                        ExcelPicture excelImage = null;
+                        System.IO.FileInfo image = null;
+
+                        if (NewResult.MoonPhase == "First Quarter")
+                        {
+                            
+                            image = image_firstq;
+                            
+
+                                //note, image name must be unique if you are using multiple images in same excel
+                                excelImage = wsSheet1.Drawings.AddPicture("image"+counter, image);
+
+                                // In .SetPosition, we are using 8th Column and 8th Row, with 0 Offset 
+                                excelImage.SetPosition(counter-1, 0, 8, 0);
+
+
+                                //set size of image, 100= width, 100= height
+                                excelImage.SetSize(40, 40);
+
+                            
+                        }
+
+
+
+
+
+
                         counter++;  // Sayaç Arttırıldı.
-                        
                     }
+                       
+                  }
 
                 }
 
                   //Command Line komutu çalıştırıldıktan ve program gerekli kodları
                                                                                ////Çalıştırıp sonlanırken kullanıcı için txt dosyasını açan kısım.
-            }
+            
             wsSheet1.Protection.IsProtected = false;
             wsSheet1.Protection.AllowSelectLockedCells = false;
             ExcelPkg.SaveAs(new FileInfo(@"results.xlsx"));
