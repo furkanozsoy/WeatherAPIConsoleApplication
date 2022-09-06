@@ -184,16 +184,7 @@ namespace WeatherAPI_InternshipProject
                         {
                             Rng.Value = NewResult.Date;
                         }
-                        ortalamaC = ortalamaC + 1; // ortalama sıcaklık
-                        if (ortalamaC == 3)
-                        {
-                            using (ExcelRange Rng = wsSheet1.Cells[counter +1, 8])
-                            {
-                                Rng.Value = NewResult.Avgtemp + "C°";
-                            }
-                            ortalamaC = 0;
-                            counter = counter + 1;
-                        }
+                        
 
                         // Ay evresi kısmı şimdilik uzun bir if else yapısı ile kuruldu
                         ExcelPicture excelImage = null;
@@ -254,6 +245,16 @@ namespace WeatherAPI_InternshipProject
                             excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
                             excelImage.SetPosition(counter - 1, 0, 8, 0);
                             excelImage.SetSize(40, 40);
+                        }
+                        ortalamaC = ortalamaC + 1; // ortalama sıcaklık
+                        if (ortalamaC == 3)
+                        {
+                            using (ExcelRange Rng = wsSheet1.Cells[counter + 1, 8])
+                            {
+                                Rng.Value = NewResult.Avgtemp + "C°";
+                            }
+                            ortalamaC = 0;
+                            counter = counter + 1;
                         }
                         counter++;  // Sayaç Arttırıldı.
                         
