@@ -125,14 +125,16 @@ namespace WeatherAPI_InternshipProject
                 Rng.Style.Font.Italic = true;
             }
 
-            System.IO.FileInfo image_fullmoon = new System.IO.FileInfo("FullMoon.jpg");
-            System.IO.FileInfo image_waxgib = new System.IO.FileInfo("WaxingGibbous.jpg");
-            System.IO.FileInfo image_firstq = new System.IO.FileInfo("FirstQuarter.jpg");
-            System.IO.FileInfo image_waxcres = new System.IO.FileInfo("WaxingCrescent.jpg");
-            System.IO.FileInfo image_newmoon = new System.IO.FileInfo("NewMoon.jpg");
-            System.IO.FileInfo image_wancres = new System.IO.FileInfo("WaningCrescent.jpg");
-            System.IO.FileInfo image_lastq = new System.IO.FileInfo("LastQuarter.jpg");
-            System.IO.FileInfo image_wangib = new System.IO.FileInfo("WaningGibbous.jpg");
+            // Ay evreleri isimlendirildi ve değşikenlere koyuldu
+
+            System.IO.FileInfo image_fullmoon = new System.IO.FileInfo("../../pics/FullMoon.jpg");
+            System.IO.FileInfo image_waxgib = new System.IO.FileInfo("../../pics/WaxingGibbous.jpg");
+            System.IO.FileInfo image_firstq = new System.IO.FileInfo("../../pics/FirstQuarter.jpg");
+            System.IO.FileInfo image_waxcres = new System.IO.FileInfo("../../pics/WaxingCrescent.jpg");
+            System.IO.FileInfo image_newmoon = new System.IO.FileInfo("../../pics/NewMoon.jpg");
+            System.IO.FileInfo image_wancres = new System.IO.FileInfo("../../pics/WaningCrescent.jpg");
+            System.IO.FileInfo image_lastq = new System.IO.FileInfo("../../pics/LastQuarter.jpg");
+            System.IO.FileInfo image_wangib = new System.IO.FileInfo("../../pics/WaningGibbous.jpg");
 
             // Excel dosyası oluşturuldu.  Ayrı bir class'da olmama sebebi classda dosyayı kaydedip daha sonra yeni veri yazmaya çalıştığımda eski veriler kayboluyor.
 
@@ -191,26 +193,66 @@ namespace WeatherAPI_InternshipProject
                             }
                             ortalamaC = 0;
                         }
+
+                        // Ay evresi kısmı şimdilik uzun bir if else yapısı ile kuruldu
                         ExcelPicture excelImage = null;
                         System.IO.FileInfo image = null;
 
                         if (NewResult.MoonPhase == "First Quarter")
                         {
-
                             image = image_firstq;
-
-
-                            //note, image name must be unique if you are using multiple images in same excel
                             excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
-
-                            // In .SetPosition, we are using 8th Column and 8th Row, with 0 Offset 
                             excelImage.SetPosition(counter - 1, 0, 8, 0);
-
-
-                            //set size of image, 100= width, 100= height
                             excelImage.SetSize(40, 40);
-
-
+                        }
+                        else if (NewResult.MoonPhase == "Full Moon")
+                        {
+                            image = image_fullmoon;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "Waxing Gibbous")
+                        {
+                            image = image_waxgib;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "Waxing Crescent")
+                        {
+                            image = image_waxcres;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "New Moon")
+                        {
+                            image = image_newmoon;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "Waning Crescent")
+                        {
+                            image = image_wancres;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "Third Quarter")
+                        {
+                            image = image_lastq;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "Waning Gibbous")
+                        {
+                            image = image_wangib;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
                         }
                         counter++;  // Sayaç Arttırıldı.
                         
@@ -279,27 +321,60 @@ namespace WeatherAPI_InternshipProject
 
                         if (NewResult.MoonPhase == "First Quarter")
                         {
-                            
                             image = image_firstq;
-                            
-
-                                //note, image name must be unique if you are using multiple images in same excel
                                 excelImage = wsSheet1.Drawings.AddPicture("image"+counter, image);
-
-                                // In .SetPosition, we are using 8th Column and 8th Row, with 0 Offset 
                                 excelImage.SetPosition(counter-1, 0, 8, 0);
-
-
-                                //set size of image, 100= width, 100= height
-                                excelImage.SetSize(40, 40);
-
-                            
+                                excelImage.SetSize(40, 40);  
                         }
-
-
-
-
-
+                        else if (NewResult.MoonPhase == "Full Moon")
+                        {
+                            image = image_fullmoon;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "Waxing Gibbous")
+                        {
+                            image = image_waxgib;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "Waxing Crescent")
+                        {
+                            image = image_waxcres;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "New Moon")
+                        {
+                            image = image_newmoon;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "Waning Crescent")
+                        {
+                            image = image_wancres;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "Third Quarter")
+                        {
+                            image = image_lastq;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
+                        else if (NewResult.MoonPhase == "Waning Gibbous")
+                        {
+                            image = image_wangib;
+                            excelImage = wsSheet1.Drawings.AddPicture("image" + counter, image);
+                            excelImage.SetPosition(counter - 1, 0, 8, 0);
+                            excelImage.SetSize(40, 40);
+                        }
 
                         counter++;  // Sayaç Arttırıldı.
                     }
