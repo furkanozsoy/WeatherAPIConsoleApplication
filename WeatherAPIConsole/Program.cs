@@ -252,7 +252,7 @@ namespace WeatherAPI_InternshipProject
                         {
                             using (ExcelRange Rng = wsSheet1.Cells[counter + 1, 1])
                             {
-                                Rng.Value = "The 3-day average temperature of the City of " + NewResult.Name + " is " + NewResult.Avgtemp + "C°";
+                                Rng.Value = "The 3 day average temperature of the City of " + NewResult.Name + " is " + NewResult.Avgtemp + "C°";
                                 Rng.Style.Font.Bold = true;
                                 Rng.Style.Font.Italic = true;
 
@@ -378,7 +378,7 @@ namespace WeatherAPI_InternshipProject
                         {
                             using (ExcelRange Rng = wsSheet1.Cells[counter + 1, 1])
                             {
-                                Rng.Value = "The 3-day average temperature of the City of " +NewResult.Name + " is " + NewResult.Avgtemp + "C°";
+                                Rng.Value = "The 3 day average temperature of the City of " +NewResult.Name + " is " + NewResult.Avgtemp + "C°";
                                 Rng.Style.Font.Bold = true;
                                 Rng.Style.Font.Italic = true;
                                 
