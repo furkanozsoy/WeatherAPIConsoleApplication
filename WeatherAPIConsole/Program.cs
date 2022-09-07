@@ -40,6 +40,7 @@ namespace WeatherAPI_InternshipProject
             wsSheet1.Column(8).Width = 16;
             wsSheet1.Column(9).Width = 5.75;
             wsSheet1.Rows[0,999999].Height = 30;
+            
 
             wsSheet1.Cells["A0:I0"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
             wsSheet1.Cells["A0:I0"].Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
@@ -249,9 +250,12 @@ namespace WeatherAPI_InternshipProject
                         ortalamaC = ortalamaC + 1; // ortalama sıcaklık
                         if (ortalamaC == 3)
                         {
-                            using (ExcelRange Rng = wsSheet1.Cells[counter + 1, 8])
+                            using (ExcelRange Rng = wsSheet1.Cells[counter + 1, 1])
                             {
-                                Rng.Value = NewResult.Avgtemp + "C°";
+                                Rng.Value = "The 3-day average temperature of the City of " + NewResult.Name + " is " + NewResult.Avgtemp + "C°";
+                                Rng.Style.Font.Bold = true;
+                                Rng.Style.Font.Italic = true;
+
                             }
                             ortalamaC = 0;
                             counter = counter + 1;
@@ -372,9 +376,12 @@ namespace WeatherAPI_InternshipProject
                         ortalamaC = ortalamaC + 1; // ortalama sıcaklık
                         if (ortalamaC == 3)
                         {
-                            using (ExcelRange Rng = wsSheet1.Cells[counter + 1, 8])
+                            using (ExcelRange Rng = wsSheet1.Cells[counter + 1, 1])
                             {
-                                Rng.Value = NewResult.Avgtemp + "C°";
+                                Rng.Value = "The 3-day average temperature of the City of " +NewResult.Name + " is " + NewResult.Avgtemp + "C°";
+                                Rng.Style.Font.Bold = true;
+                                Rng.Style.Font.Italic = true;
+                                
                             }
                             ortalamaC = 0;
                             counter = counter + 1;
