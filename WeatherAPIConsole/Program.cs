@@ -23,13 +23,13 @@ namespace WeatherAPI_InternshipProject
     {
         static public void Main(String[] args)
         {
-            
-
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;  // EEPlus için lisans işlemi
 
             ExcelPackage ExcelPkg = new ExcelPackage();                                 // Excel Dosya işlemi
             ExcelWorksheet wsSheet1 = ExcelPkg.Workbook.Worksheets.Add("Sheet1");       // Excel Doyası içerisinde Workbook/Worksheet işlemi
+
+            //Sütun düzenlemeleri
             wsSheet1.Column(1).Width = 25;
             wsSheet1.Column(2).Width = 25;
             wsSheet1.Column(3).Width = 16;
@@ -39,39 +39,18 @@ namespace WeatherAPI_InternshipProject
             wsSheet1.Column(7).Width = 16;
             wsSheet1.Column(8).Width = 16;
             wsSheet1.Column(9).Width = 5.75;
+            wsSheet1.Column(10).Width = 5.75;
             wsSheet1.Rows[0,999999].Height = 30;
             
-
+            //Style Düzenlemeleri
             wsSheet1.Cells["A0:I0"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
             wsSheet1.Cells["A0:I0"].Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
             wsSheet1.Cells["A0:I0"].Style.Border.Left.Style = ExcelBorderStyle.Thick;
             wsSheet1.Cells["A0:I0"].Style.Border.Right.Style = ExcelBorderStyle.Thick;      // Excel Dosyası görüntü özellikleri
 
 
-
-
-            //System.IO.FileInfo image = new System.IO.FileInfo("FullMoon.jpg");
-            //ExcelPicture excelImage = null;
-            //if (image != null)
-            //{
-
-            //    //note, image name must be unique if you are using multiple images in same excel
-            //    excelImage = wsSheet1.Drawings.AddPicture("image", image);
-
-            //    // In .SetPosition, we are using 8th Column and 8th Row, with 0 Offset 
-            //    excelImage.SetPosition(9, 0, 8, 0);
-
-
-            //    //set size of image, 100= width, 100= height
-            //    excelImage.SetSize(40, 40);
-
-            //}
-
-
-
-
-
-            using (ExcelRange Rng = wsSheet1.Cells[1, 1])                                   // Excel Tablo Headerları
+            // Excel Tablo Headerları
+            using (ExcelRange Rng = wsSheet1.Cells[1, 1])                                   
             {
                 Rng.Value = "Country";
                 Rng.Style.Font.Bold = true;
@@ -115,7 +94,7 @@ namespace WeatherAPI_InternshipProject
             }
             using (ExcelRange Rng = wsSheet1.Cells[1, 8])
             {
-                Rng.Value = "3 Day Avg. Temp";
+                Rng.Value = "Day Summary";
                 Rng.Style.Font.Bold = true;
                 Rng.Style.Font.Italic = true;
             }
@@ -125,6 +104,7 @@ namespace WeatherAPI_InternshipProject
                 Rng.Style.Font.Bold = true;
                 Rng.Style.Font.Italic = true;
             }
+            
 
             // Ay evreleri isimlendirildi ve değşikenlere koyuldu
 
@@ -186,6 +166,16 @@ namespace WeatherAPI_InternshipProject
                             Rng.Value = NewResult.Date;
                         }
                         
+                        // Günlük Hava Durumu Özeti Icon halinde yazıldı.
+
+                        String FilePath = NewResult.Icon.Substring(NewResult.Icon.Length - 11);
+                        String RealFilePath = "../../pics/" + FilePath;
+                        System.IO.FileInfo image_summary_F = new System.IO.FileInfo("../../pics/" + FilePath);
+                        ExcelPicture excelImageSum = null;
+                        System.IO.FileInfo image_summary = image_summary_F;
+                        excelImageSum = wsSheet1.Drawings.AddPicture("9image" + counter + "a4", image_summary);
+                        excelImageSum.SetPosition(counter - 1, 0, 7, 0);
+                        excelImageSum.SetSize(40, 40);
 
                         // Ay evresi kısmı şimdilik uzun bir if else yapısı ile kuruldu
                         ExcelPicture excelImage = null;
@@ -247,7 +237,7 @@ namespace WeatherAPI_InternshipProject
                             excelImage.SetPosition(counter - 1, 0, 8, 0);
                             excelImage.SetSize(40, 40);
                         }
-                        ortalamaC = ortalamaC + 1; // ortalama sıcaklık
+                        ortalamaC = ortalamaC + 1; // ortalama sıcaklık şehrin bilgileri 3 defa yazıldıktan sonra yazılıyor.
                         if (ortalamaC == 3)
                         {
                             using (ExcelRange Rng = wsSheet1.Cells[counter + 1, 1])
@@ -257,8 +247,8 @@ namespace WeatherAPI_InternshipProject
                                 Rng.Style.Font.Italic = true;
 
                             }
-                            ortalamaC = 0;
-                            counter = counter + 1;
+                            ortalamaC = 0;      //3 Seferden sonra yeni şehir için bu değişken sıfırlanıyor
+                            counter = counter + 1;  
                         }
                         counter++;  // Sayaç Arttırıldı.
                         
@@ -268,7 +258,7 @@ namespace WeatherAPI_InternshipProject
             }
             else
             {
-                Console.Write("Command Line'da Şehir girmediğiniz, İstediğiniz Sehirleri Giriniz: ");
+                Console.Write("Command Line'da Şehir girmediniz, İstediğiniz Sehirleri Giriniz: ");
                 // Eğer kullanıcı istenildiği üzere cmd üzerinden şehirler girmezse input olarak soruluyor.
                 // else yapısında geri kalan işlemler input üzerinden olmak üzere if tarafı ile aynı.
                 string sehir = Console.ReadLine();
@@ -314,6 +304,22 @@ namespace WeatherAPI_InternshipProject
                             Rng.Value = NewResult.Date;
                         }
                         
+                        
+                        
+
+
+                        String FilePath = NewResult.Icon.Substring(NewResult.Icon.Length - 11);
+                        String RealFilePath = "../../pics/" + FilePath;
+                        System.IO.FileInfo image_summary_F = new System.IO.FileInfo("../../pics/" + FilePath);
+                        ExcelPicture excelImageSum = null;
+                        System.IO.FileInfo image_summary = image_summary_F;
+                        excelImageSum = wsSheet1.Drawings.AddPicture("9image" + counter + "a4", image_summary);
+                        excelImageSum.SetPosition(counter - 1, 0, 7, 0);
+                        excelImageSum.SetSize(40, 40);
+
+
+
+
                         ExcelPicture excelImage = null;
                         System.IO.FileInfo image = null;
 
@@ -373,6 +379,7 @@ namespace WeatherAPI_InternshipProject
                             excelImage.SetPosition(counter - 1, 0, 8, 0);
                             excelImage.SetSize(40, 40);
                         }
+
                         ortalamaC = ortalamaC + 1; // ortalama sıcaklık
                         if (ortalamaC == 3)
                         {
